@@ -7,4 +7,3 @@ Collection of Home Assistant (HA) automations, scripts, blueprints and notes for
 - scripts/ — reusable HA scripts
 - blueprints/ — HA blueprints
 - docs/ — usage and deployment notes
-

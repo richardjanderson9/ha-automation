@@ -1,7 +1,28 @@
-# ignore environment and secret files
+# -------------------------
+# Secrets & env
+# -------------------------
 .env
 .secrets.baseline
 secrets.*
 *.pem
 *.key
+
+# Editor / tooling
 .vscode/
+
+# Project-specific patterns
+*api*
+*testing*
+*test*
+*richard*
+
+# -------------------------
+# Sensitive build/local data
+# -------------------------
+# Ignore the localData directory used for local build scripts (contains tokens/config)
+localBuildScripts/localData/
+localBuildScripts/.venv/
+# Also ignore any json files anywhere (explicit)
+**/*.json
+# Fallback pattern (covers simple cases)
+*.json
