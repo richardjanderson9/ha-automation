@@ -27,3 +27,17 @@ This repository contains a collection of Home Assistant (HA) automations, script
 3. Run `installPythonRequirements.sh` to set up dependencies.
 4. Use `getDeviceData.py` to fetch and export HA entity data.
 5. Customize scripts and automations as needed.
+
+## Example: `scriptData.json`
+
+Below is an example of the `scriptData.json` file, which is used to configure the Home Assistant URL and token. This file is ignored by version control to protect sensitive data.
+
+```json
+{
+    "ha_config": {
+        "HA_URL": "https://your-domain:your-port",
+        "HA_TOKEN": "YOUR_LONG_LIVED_ACCESS_TOKEN"
+    }
+}
+```
+
