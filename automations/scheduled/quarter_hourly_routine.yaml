@@ -1,0 +1,10 @@
+alias: "quarter_hourly_routine"
+description: Master controller running every 15 mins
+triggers:
+  - trigger: time_pattern
+    minutes: /15
+actions:
+  - alias: Update Sleep State
+    action: script.is_user_sleeping
+mode: parallel
+max: 10

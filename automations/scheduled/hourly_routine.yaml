@@ -1,24 +1,17 @@
-alias: "Routine: Hourly System Checks"
-description: "Central controller for all scripts that run on a 1-hour cycle"
-trigger:
-  - platform: time_pattern
-    hours: "/1"
+alias: "hourly_routine"
+description: Master controller for all scripts that run on a 1-hour cycle
+triggers:
+  - hours: /1
     minutes: "00"
     seconds: "00"
-condition:
-  # This block allows execution ONLY between 6am and 10pm
+    trigger: time_pattern
+conditions:
   - condition: time
     after: "06:00:00"
-    before: "22:00:00" 
-action:
-  - alias: "Log Execution"
-    action: logbook.log
-    data:
-      name: "Hourly Routine"
-      message: "Starting hourly system check cycle."
-
-  - alias: "Run Battery Check"
+    before: "22:00:01"
+actions:
+  - alias: Run Battery Check
     action: script.check_device_batteries
-
+    data: {}
 mode: parallel
 max: 10

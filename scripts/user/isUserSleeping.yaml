@@ -1,1 +1,49 @@
-# Blank in building
+alias: "is_user_sleeping.yaml"
+# Description: Manages the 'is_sleeping' state based on watch and phone sensors.
+# Triggered every 15 minutes via quarter_hourly_routine.yaml
+sequence:
+  - if:
+      # Check if all sleep indicators are present
+      - condition: and
+        conditions:
+          # 1. Time check (Must be between 9:00 PM and 9:00 AM)
+          - condition: time
+            after: "21:00:00"
+            before: "09:00:00"
+          
+          # 2. Watch check (Is Bedtime Mode turned on?)
+          - condition: state
+            entity_id: binary_sensor.watch_bedtime_mode
+            state: "on"
+          
+          # 3. Phone check (Is the sleep confidence sensor above 50%?)
+          - condition: numeric_state
+            entity_id: sensor.phone_sleep_confidence
+            above: 50
+          
+          # 4. Room check (Is the bedroom light already turned off?)
+          - condition: state
+            entity_id: light.bedroom_light
+            state: "off"
+    
+    then:
+      # --- SLEEP DETECTED ---
+      - action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.is_sleeping
+      
+      - action: logbook.log
+        data:
+          name: "Sleep Logic"
+          message: "Conditions met: Setting Sleep Mode to ON"
+
+    else:
+      # --- NOT SLEEPING / AWAKE ---
+      - action: input_boolean.turn_off
+        target:
+          entity_id: input_boolean.is_sleeping
+      
+      - action: logbook.log
+        data:
+          name: "Sleep Logic"
+          message: "Conditions not met: Setting Sleep Mode to OFF"
