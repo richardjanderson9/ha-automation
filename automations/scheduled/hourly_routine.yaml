@@ -1,4 +1,4 @@
-alias: "hourly_routine"
+alias: hourly_routine.yaml
 description: Master controller for all scripts that run on a 1-hour cycle
 triggers:
   - hours: /1
