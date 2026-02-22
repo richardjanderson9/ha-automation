@@ -22,6 +22,8 @@ secrets.*
 # Ignore the localData directory used for local build scripts (contains tokens/config)
 localBuildScripts/localData/
 localBuildScripts/.venv/
+# Custom script that may contain sensitive info (e.g., device names, tokens)
+localBuildScripts/pushDeviceName.py
 # Also ignore any json files anywhere (explicit)
 **/*.json
 # Fallback pattern (covers simple cases)

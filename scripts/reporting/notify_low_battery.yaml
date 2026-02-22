@@ -1,0 +1,25 @@
+alias: notify_low_battery.yaml
+sequence:
+  - variables:
+      threshold: 35
+      notify_service: notify.phone
+      devices:
+        - phone
+        - watch
+        - tablet
+      low_batt_msg: |-
+        {%- set ns = namespace(items=[]) -%} {%- for d in devices -%}
+          {%- set lvl = states('sensor.' ~ d ~ '_battery_level') | int(-1) -%}
+          {%- set st = states('sensor.' ~ d ~ '_battery_state') -%}
+          {%- if lvl != -1 and lvl < threshold and st != 'charging' -%}
+            {%- set ns.items = ns.items + [d | capitalize ~ ' (' ~ lvl ~ '%)'] -%}
+          {%- endif -%}
+        {%- endfor -%} {{- ns.items | join(', ') -}}
+  - if:
+      - condition: template
+        value_template: "{{ low_batt_msg | length > 0 }}"
+    then:
+      - action: "{{ notify_service }}"
+        data:
+          title: 🪫 Low Battery Alert
+          message: "Below {{ threshold }}%: {{ low_batt_msg }}"
