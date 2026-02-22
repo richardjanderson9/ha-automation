@@ -1,0 +1,7 @@
+# ignore environment and secret files
+.env
+.secrets.baseline
+secrets.*
+*.pem
+*.key
+.vscode/
